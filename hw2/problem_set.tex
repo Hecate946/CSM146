@@ -1,0 +1,257 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[version=4]{mhchem}
+\usepackage{stmaryrd}
+\usepackage{bbold}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue, filecolor=magenta, urlcolor=cyan,}
+\urlstyle{same}
+
+\title{Homework $\# 2$ }
+
+\author{}
+\date{}
+
+
+%New command to display footnote whose markers will always be hidden
+\let\svthefootnote\thefootnote
+\newcommand\blfootnotetext[1]{%
+  \let\thefootnote\relax\footnote{#1}%
+  \addtocounter{footnote}{-1}%
+  \let\thefootnote\svthefootnote%
+}
+
+%Overriding the \footnotetext command to hide the marker if its value is `0`
+\let\svfootnotetext\footnotetext
+\renewcommand\footnotetext[2][?]{%
+  \if\relax#1\relax%
+    \ifnum\value{footnote}=0\blfootnotetext{#2}\else\svfootnotetext{#2}\fi%
+  \else%
+    \if?#1\ifnum\value{footnote}=0\blfootnotetext{#2}\else\svfootnotetext{#2}\fi%
+    \else\svfootnotetext[#1]{#2}\fi%
+  \fi
+}
+
+\begin{document}
+\maketitle
+Due: 4th May 2024, Saturday, before $11: 59 \mathrm{pm}$
+
+\section*{Submission instructions}
+\begin{itemize}
+  \item Submit your solutions electronically on the course Gradescope site as PDF files.
+  \item If you plan to typeset your solutions, please use the LaTeX solution template provided on Bruinlearn. If you must submit scanned handwritten solutions, please use a black pen on blank white paper and a high-quality scanner app.
+  \item For the programming questions type your answers and include related plots/figures/tables in your solutions.
+  \item You are required to add your code at the end of your solutions pdf.
+\end{itemize}
+
+\section*{Problem 1 (TRUE/FALSE)}
+In each of these problems, give a clear explanation for your choice.
+
+(a) In the ID3 algorithm, the resulting decision tree may sometimes be suboptimal.
+
+TRUE / FALSE.
+
+(b) A node in a decision tree cannot have more than two children.
+
+TRUE / FALSE.
+
+(c) At any point in time, the ID3 algorithms splits the data in the decision tree by finding the feature $X$ that minimizes the mutual information $I(X ; Y)$, where $Y$ is the label.
+
+TRUE / FALSE.
+
+(d) You cannot use nearest neighbor classifier when there are categorical features in your dataset. TRUE / FALSE.
+
+(e) A $k$-NN classifier is more likely to overfit for larger values of $k$.
+
+TRUE / FALSE.
+
+(f) Consider a $k$-NN with $k=1$ and only two samples in the training dataset. If we use an $\ell_{2}$ distance metric, then the classifier is equivalent to a linear classifier.
+
+TRUE / FALSE.\\
+(g) Training $k$-NN classifiers involves only saving the training dataset into memory. TRUE / FALSE.
+
+(h) If we set $k=N$ where $N$ is the number of samples in the training data, then $k$-NN will output the majority class among the training samples.
+
+TRUE / FALSE.
+
+(i) Deep decision trees are less likely to overfit.
+
+TRUE / FALSE.
+
+(j) A regularized solution which minimizes $J(\mathbf{w})+\lambda R(\mathbf{w})$ leads to a model with a higher empirical training loss $J(\mathbf{w})$. Here $R(\mathbf{w})$ is a regularizer e.g. $\|w\|_{2}^{2}$.
+
+TRUE / FALSE.
+
+(k) You trained a binary classifier which has very high accuracy on training data but much lower accuracy on test data. Which of the following statements can be true? Give 1-2 lines of reasoning along with your answer.
+
+i. This is an example of underfitting.
+
+TRUE / FALSE.
+
+ii. The model may not have been regularized.
+
+TRUE / FALSE.
+
+iii. The training and test dataset are sampled from different distributions.
+
+TRUE / FALSE.
+
+iv. There are too many samples in the training set hence the model is overfitting to training set which causes poor performance in the test set.
+
+TRUE / FALSE.
+
+\section*{Problem 2 (ID3)}
+You get the following data set:
+
+\begin{center}
+\begin{tabular}{c|c|c||c}
+$\mathrm{V}$ & $\mathrm{W}$ & $\mathrm{X}$ & $\mathrm{Y}$ \\
+\hline
+0 & 0 & 0 & 0 \\
+0 & 1 & 0 & 1 \\
+1 & 0 & 0 & 1 \\
+1 & 1 & 0 & 0 \\
+1 & 1 & 1 & 0 \\
+\end{tabular}
+\end{center}
+
+Your task is to build a decision tree for classifying variable $Y$.
+
+(a) Write down the entire decision tree constructed by ID3. What is the training error of this classifier.
+
+(b) Can you find a tree with smaller height than the tree returned by ID3 in b), which also has zero training error?
+
+(c) Consider the following process: we start at the root and prune splits for which the information gain is less than some small number $\epsilon$. This is called top-down pruning. What is the decision tree returned whenever $\epsilon=10^{-4}$ ? What is the training set error for this tree?
+
+(d) What trees do we obtain as we vary $\epsilon>0$ ?
+
+\section*{Problem 3 (Prove or Disprove Validity of Kernels)}
+State $[\mathrm{YES} / \mathrm{NO}]$ for the following being valid positive semi-definite kernels or not. To receive full credit, you must provide an associated linear mapping for the $[\mathrm{YES}]$ case, or construct a counterexample for the $[\mathrm{NO}]$ case. No points would be awarded for answers without justification.
+
+(a) The function $k: \mathbb{R} \times \mathbb{R} \rightarrow \mathbb{R}_{+}$defined as $k\left(x, x^{\prime}\right)=\left(x-x^{\prime}\right)^{4}$ for all $x, x^{\prime} \in \mathbb{R}$. Is this a valid kernel?
+
+(b) Let $\mathbf{x}, \mathbf{x}^{\prime} \in \mathbb{R}^{D}, k_{0}\left(\mathbf{x}, \mathbf{x}^{\prime}\right)$ be any valid kernel. Let
+
+$$
+k\left(\mathbf{x}, \mathbf{x}^{\prime}\right)=\|\mathbf{x}\|^{2} K_{0}\left(\mathbf{x}, \mathbf{x}^{\prime}\right)\left\|\mathbf{x}^{\prime}\right\|^{2}
+$$
+
+Is this a valid kernel?
+
+\section*{Problem 4 (Support Vector Machines (SVM))}
+Suppose we are looking for a maximum-margin linear classifier through the origin, (i.e. bias $b=0$ ) for the hard margin SVM formulation, (i.e., no slack variables). In other words,
+
+$$
+\min \frac{1}{2}\|\mathbf{w}\|^{2} \text { s.t. } y^{(i)} \mathbf{w}^{T} \mathbf{x}^{(i)} \geq 1, i=1, \ldots, n
+$$
+
+(a) Given a single training vector $\mathbf{x}=(1,1)^{T} \in \mathbb{R}^{2}$ with label $y=-1$, what is the $\mathbf{w}^{*}$ that satisfies the above constrained minimization?
+
+(b) Suppose we have two training examples, $\mathbf{x}^{(1)}=(1,1)^{T} \in \mathbb{R}^{2}$ and $\mathbf{x}^{(2)}=(1,0)^{T} \in \mathbb{R}^{2}$ with labels $y^{(1)}=1$ and $y^{(2)}=-1$. What is $\mathbf{w}^{*}$ in this case?\\
+(c) Suppose we now allow the bias $b$ to be non-zero. In other words, we now adopt the hard margin SVM formulation from lecture, where $\mathbf{w}=\boldsymbol{\theta}_{1: d}$ are the parameters excluding the bias:
+
+$$
+\min _{\boldsymbol{\theta}} \frac{1}{2}\|\mathbf{w}\|^{2} \text { s.t. } y^{(i)} \boldsymbol{\theta}^{T} \mathbf{x}^{(i)} \geq 1, i=1, \ldots, n
+$$
+
+How would the classifier and the margin change in the previous question? What are $\left(\mathbf{w}^{*}, b^{*}\right)$ ? Compare your solutions with and without bias.
+
+\section*{Problem 5 (Programming Exercise: Applying Classification Models)}
+In this problem, we ask you to compare the classification models we have studied till now i.e., Decision trees, K-nearest neighbors, and Logistic regression.
+
+\section*{Introdion $^{1}$}
+This data was extracted from the 1994 Census bureau database by Ronny Kohavi and Barry Becker. For computational reasons, we have already extracted a relatively clean subset of the data for this homework. The prediction task is to determine whether a person makes over $\$ 50 \mathrm{~K}$ a year.
+
+In this problem, we ask you to complete the analysis of what sorts of people were likely to earn more than $\$ 50 \mathrm{~K}$ a year. In particular, we ask you to apply the tools of machine learning to predict which individuals are more likely to have high income.
+
+\section*{Starter Files}
+code and data
+
+\begin{itemize}
+  \item Sp24-M146-HW2.ipynb. Instruction is here ${ }^{2}$.
+  \item \href{http://nutil.py}{nutil.py}
+  \item adult\_subsample.csv
+\end{itemize}
+
+documentation
+
+\begin{itemize}
+  \item Decision Tree Classifier:
+\end{itemize}
+
+\href{http://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html}{http://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeClassifier.html}
+
+\begin{itemize}
+  \item K-Nearest Neighbor Classifier:
+\end{itemize}
+
+\href{http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html}{http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html}
+
+\begin{itemize}
+  \item Logistic Regression:
+\end{itemize}
+
+\href{https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html}{https://scikit-learn.org/stable/modules/generated/sklearn.linear\_model.LogisticRegression.html}
+
+\begin{itemize}
+  \item Cross-Validation:
+\end{itemize}
+
+\href{http://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html}{http://scikit-learn.org/stable/modules/generated/sklearn.model\_selection.train\_test\_split.html}
+
+\begin{itemize}
+  \item Metrics:
+\end{itemize}
+
+\href{http://scikit-learn.org/stable/modules/generated/sklearn.metrics.accuracy_score.html}{http://scikit-learn.org/stable/modules/generated/sklearn.metrics.accuracy\_score.html}
+
+\href{https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1_score.html}{https://scikit-learn.org/stable/modules/generated/sklearn.metrics.f1\_score.html}
+
+\section*{Visualization}
+One of the first things to do before trying any formal machine learning technique is to dive into the data. This can include looking for funny values in the data, looking for outliers, looking at the
+\footnotetext{${ }^{1}$ This assignment is adapted from the UCI Machine learning repository, available at \href{https://archive.ics.uci}{https://archive.ics.uci}. edu/ml/datasets/adult.
+
+${ }^{2}$ To run the notebook on Google Colab, check the first 3 cells in Sp24-M146-HW2.ipynb; otherwise, delete the first 3 cells.
+}
+range of feature values, what features seem important, etc.
+
+Note: We have already converted all the categorical features to numerical ones. The target column is the last one: " $>50 \mathrm{k} "$, where 1 and 0 indicate $>50 \mathrm{k}$ or $\leq 50 \mathrm{k}$ respectively. The feature "fnlwgt" describes the number of people the census believes the entry represents. All the other feature names should be self-explanatory. If you want to learn more about this data please click here.
+
+(a) Make histograms for each feature, separating the examples by class (e.g. income greater than $50 \mathrm{k}$ or smaller than or equal to $50 \mathrm{k}$ ). This should produce fourteen plots, one for each feature, and each plot should have two overlapping histograms, with the color of the histogram indicating the class. For each feature, what trends do you observe in the data? (Please only describe the general trend. No need for more than two sentences per feature.)
+
+\section*{Evaluation}
+Now, let us use scikit-learn to train a DecisionTreeClassifier, KNeighborsClassifier, and LogisticRegression on the data.
+
+Using the predictive capabilities of the scikit-learn package is very simple. In fact, it can be carried out in three simple steps: initializing the model, fitting it to the training data, and predicting new values. ${ }^{3}$
+
+(b) Before trying out any classifier, it is often useful to establish a baseline. We have implemented one simple baseline classifier, MajorityVoteClassifier, that always predicts the majority class from the training set. Read through the MajorityVoteClassifier and its usage and make sure you understand how it works.
+
+Your goal is to implement and evaluate another baseline classifier, RandomClassifier, that predicts a target class according to the distribution of classes in the training data set. For example, if $85 \%$ of the examples in the training set have $>50 \mathrm{k}=0$ and $15 \%$ have $>50 \mathrm{k}=1$, then, when applied to a test set, RandomClassifier should randomly predict $85 \%$ of the examples as $>50 \mathrm{k}=0$ and $15 \%$ as $>50 \mathrm{k}=1$.
+
+Implement the missing portions of RandomClassifier according to the provided specifications. Then train your RandomClassifier on the entire training data set, and evaluate its training error. If you implemented everything correctly, you should have an error of 0.385 or 0.374 , depending on an implementation detail; both error values are correct.
+
+(c) Now that we have a baseline, train and evaluate a DecisionTreeClassifier (using the class from scikit-learn and referring to the documentation as needed). Make sure you initialize your classifier with the appropriate parameters; in particular, use the 'entropy' criterion discussed in class. What is the training error of this classifier?
+
+(d) Similar to the previous question, train and evaluate a KNeighborsClassifier (using the class from scikit-learn and referring to the documentation as needed). Use $k=3,5$ and 7 as the number of neighbors and report the training error of this classifier respectively.
+\footnotetext{${ }^{3}$ Note that almost all of the model techniques in scikit-learn share a few common named functions, once they are initialized. You can always find out more about them in the documentation for each model. These are some-model-name.fit (...), some-model-name.predict (...), and some-model-name.score(...).
+}
+(e) Similar to the previous question, train and evaluate a LogisticRegression (using the class from scikit-learn and referring to the documentation as needed). Use $\lambda=0.1,1$ and 10 as the regularization hyperparameter and report the training error of this classifier respectively. Make sure you initialize your classifier with the appropriate parameters; random\_state $=0$ and max\_iter=1000. (Hint: function argument $\mathrm{C}$ is the inverse of regularization strength, therefore $\mathrm{C}=1 / \lambda$.)
+
+(f) So far, we have looked only at training error, but as we learned in class, training error is a poor metric for evaluating classifiers. Let us use cross-validation instead.
+
+Implement the missing portions of error (...) according to the provided specifications. You may find it helpful to use StratifiedShuffleSplit(...) from scikit-learn. To ensure that we always get the same splits across different runs (and thus can compare the classifier results), set the random\_state parameter to be the same (e.g., 0).
+
+Next, use your error (...) function to evaluate the training error and (cross-validation) validation error and validation micro averaged F1 Score (If you dont know what is F1, please click here) of the RandomClassifier, DecisionTreeClassifier,KNeighborsClassifier, and LogisticRegression models (for the DecisionTreeClassifier, use 'entropy' criterion, for the KNeighborsClassifier, use $k=5$, for the LogisticRegression, use $\lambda=1$, random\_state $=0$ and max\_iter $=1000$ ). To do this, generate a random $85 / 15$ split of the training data, train each model on the $85 \%$ fraction, evaluate the error on both the $85 \%$ and the $15 \%$ fraction, and repeat this 100 times to get an average result. What are the average training error, validation error, and validation F1 score of each of your classifiers on the adult\_subsample data set?
+
+(g) One way to find out the best value of $k$ for KNeighborsClassifier is $n$-fold cross validation. Find out the best value of $k$ using 5 -fold cross validation. You may find the cross\_val\_score(...) from scikit-learn helpful. Run 5-fold cross validation for all odd numbers ranging from 1 to 50 as the number of neighbors. Then plot the validation score against the number of neighbors, $k$. Include this plot in your writeup, and provide a 12 sentence description of your observations. What is the best value of $k$ and what is the corresponding score?
+
+(h) One problem with decision trees is that they can overfit to training data, yielding complex classifiers that do not generalize well to new data. Let us see whether this is the case for the adult\_subsample data.
+
+One way to prevent decision trees from overfitting is to limit their depth. Repeat your crossvalidation experiments but for increasing depth limits, specifically, $1,2, \ldots, 20$. Then plot the average training error and validation error against the depth limit. Include this plot in your writeup, making sure to label all axes and include a legend for your classifiers. What is the best depth limit to use for this data? Do you see overfitting? Justify your answers using the plot.
+
+
+\end{document}
